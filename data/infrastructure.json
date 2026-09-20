@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "source": "OpenStreetMap extract + simulated vulnerability scores [DEMO DATA]",
+    "generated": "2026-08-25T06:00:00Z"
+  },
+  "roads": [
+    {"id":"NH-054","name":"NH-54 Silchar-Mizoram","type":"National Highway","lanes":2,"lengthKm":342,"zoneIds":["ZONE-005"],"vulnerability":0.78},
+    {"id":"NH-010","name":"NH-10 Sevok-Gangtok","type":"National Highway","lanes":2,"lengthKm":182,"zoneIds":["ZONE-002","ZONE-009"],"vulnerability":0.91},
+    {"id":"NH-007","name":"NH-7 Rishikesh-Badrinath","type":"National Highway","lanes":2,"lengthKm":278,"zoneIds":["ZONE-003","ZONE-007"],"vulnerability":0.88},
+    {"id":"NH-066","name":"NH-66 Mumbai-Kanyakumari","type":"National Highway","lanes":4,"lengthKm":1622,"zoneIds":["ZONE-001","ZONE-004"],"vulnerability":0.69},
+    {"id":"SH-037","name":"SH-37 Munnar-Kumily","type":"State Highway","lanes":2,"lengthKm":108,"zoneIds":["ZONE-001"],"vulnerability":0.94},
+    {"id":"NH-183","name":"NH-183 Kottayam-Kumily","type":"National Highway","lanes":2,"lengthKm":163,"zoneIds":["ZONE-001"],"vulnerability":0.82},
+    {"id":"NH-031","name":"NH-31 Siliguri-Guwahati","type":"National Highway","lanes":4,"lengthKm":478,"zoneIds":["ZONE-002","ZONE-005","ZONE-008"],"vulnerability":0.74},
+    {"id":"SH-012","name":"SH-12 Kullu-Manali","type":"State Highway","lanes":2,"lengthKm":138,"zoneIds":["ZONE-007"],"vulnerability":0.92},
+    {"id":"NH-016","name":"NH-16 Kolkata-Chennai","type":"National Highway","lanes":4,"lengthKm":1532,"zoneIds":["ZONE-006"],"vulnerability":0.48},
+    {"id":"NH-181","name":"NH-181 Coimbatore-Ooty","type":"National Highway","lanes":2,"lengthKm":126,"zoneIds":["ZONE-010"],"vulnerability":0.66}
+  ],
+  "settlements": [
+    {"id":"SET-001","name":"Munnar","state":"Kerala","population":82340,"elevationM":1600,"zoneIds":["ZONE-001"],"proximityRisk":0.94},
+    {"id":"SET-002","name":"Darjeeling","state":"West Bengal","population":118805,"elevationM":2042,"zoneIds":["ZONE-002"],"proximityRisk":0.89},
+    {"id":"SET-003","name":"Kedarnath","state":"Uttarakhand","population":612,"elevationM":3553,"zoneIds":["ZONE-003"],"proximityRisk":0.98},
+    {"id":"SET-004","name":"Joshimath","state":"Uttarakhand","population":16709,"elevationM":1875,"zoneIds":["ZONE-003"],"proximityRisk":0.96},
+    {"id":"SET-005","name":"Ratnagiri","state":"Maharashtra","population":70335,"elevationM":36,"zoneIds":["ZONE-004"],"proximityRisk":0.68},
+    {"id":"SET-006","name":"Diphu","state":"Assam","population":62982,"elevationM":185,"zoneIds":["ZONE-005"],"proximityRisk":0.58},
+    {"id":"SET-007","name":"Araku Valley","state":"Andhra Pradesh","population":21125,"elevationM":910,"zoneIds":["ZONE-006"],"proximityRisk":0.61},
+    {"id":"SET-008","name":"Kullu","state":"Himachal Pradesh","population":43860,"elevationM":1279,"zoneIds":["ZONE-007"],"proximityRisk":0.87},
+    {"id":"SET-009","name":"Cherrapunji","state":"Meghalaya","population":11733,"elevationM":1484,"zoneIds":["ZONE-008"],"proximityRisk":0.82},
+    {"id":"SET-010","name":"Gangtok","state":"Sikkim","population":98658,"elevationM":1650,"zoneIds":["ZONE-009"],"proximityRisk":0.91},
+    {"id":"SET-011","name":"Ooty","state":"Tamil Nadu","population":73530,"elevationM":2240,"zoneIds":["ZONE-010"],"proximityRisk":0.52},
+    {"id":"SET-012","name":"Manali","state":"Himachal Pradesh","population":8096,"elevationM":2050,"zoneIds":["ZONE-007"],"proximityRisk":0.93}
+  ],
+  "criticalInfrastructure": [
+    {"id":"CI-001","name":"Teesta-V Hydroelectric Dam","type":"Hydroelectric","capacityMW":510,"zoneIds":["ZONE-009"],"riskExposure":"CRITICAL"},
+    {"id":"CI-002","name":"Karcham Wangtoo HE Project","type":"Hydroelectric","capacityMW":1000,"zoneIds":["ZONE-003","ZONE-007"],"riskExposure":"HIGH"},
+    {"id":"CI-003","name":"Mullaperiyar Dam","type":"Water Reservoir","capacityMCM":443,"zoneIds":["ZONE-001"],"riskExposure":"HIGH"},
+    {"id":"CI-004","name":"Idukki Arch Dam","type":"Hydroelectric","capacityMW":780,"zoneIds":["ZONE-001"],"riskExposure":"MODERATE"},
+    {"id":"CI-005","name":"Koyna Hydroelectric Project","type":"Hydroelectric","capacityMW":1960,"zoneIds":["ZONE-004"],"riskExposure":"MODERATE"},
+    {"id":"CI-006","name":"Rishikesh-AIIMS Hospital","type":"Hospital","beds":1200,"zoneIds":["ZONE-003"],"riskExposure":"HIGH"},
+    {"id":"CI-007","name":"Bagdogra Airport","type":"Airport","passengersAnnual":2500000,"zoneIds":["ZONE-002"],"riskExposure":"LOW"},
+    {"id":"CI-008","name":"Kolkata-Guwahati Rail Line","type":"Railway","trackLengthKm":820,"zoneIds":["ZONE-002","ZONE-005"],"riskExposure":"MODERATE"},
+    {"id":"CI-009","name":"Rangit Dam","type":"Hydroelectric","capacityMW":60,"zoneIds":["ZONE-009"],"riskExposure":"HIGH"},
+    {"id":"CI-010","name":"Umiam Lake Dam","type":"Water Reservoir","capacityMCM":220,"zoneIds":["ZONE-008"],"riskExposure":"MODERATE"}
+  ],
+  "rivers": [
+    {"id":"RIV-001","name":"Teesta River","lengthKm":324,"zoneIds":["ZONE-002","ZONE-009"],"floodRisk":0.88},
+    {"id":"RIV-002","name":"Alaknanda River","lengthKm":195,"zoneIds":["ZONE-003"],"floodRisk":0.93},
+    {"id":"RIV-003","name":"Periyar River","lengthKm":244,"zoneIds":["ZONE-001"],"floodRisk":0.81},
+    {"id":"RIV-004","name":"Beas River","lengthKm":470,"zoneIds":["ZONE-007"],"floodRisk":0.85},
+    {"id":"RIV-005","name":"Savitri River","lengthKm":120,"zoneIds":["ZONE-004"],"floodRisk":0.72},
+    {"id":"RIV-006","name":"Kopili River","lengthKm":290,"zoneIds":["ZONE-005","ZONE-008"],"floodRisk":0.77},
+    {"id":"RIV-007","name":"Mandakini River","lengthKm":80,"zoneIds":["ZONE-003"],"floodRisk":0.96}
+  ]
+}

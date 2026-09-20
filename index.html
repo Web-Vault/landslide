@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TerraShield AI — Landslide Intelligence Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="scanlines"></div>
+  <div class="grid-overlay"></div>
+
+  <header class="top-bar glass">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="TerraShield AI" class="brand-logo" />
+      <div class="brand-text">
+        <h1>TerraShield <span class="accent-cyan">AI</span></h1>
+        <p class="tagline">Landslide Intelligence Mission Control</p>
+      </div>
+    </div>
+
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-view="overview"><span class="nav-dot"></span>Overview</button>
+      <button class="nav-tab" data-view="map"><span class="nav-dot"></span>Live Map</button>
+      <button class="nav-tab" data-view="risk"><span class="nav-dot"></span>Risk Intel</button>
+      <button class="nav-tab" data-view="alerts"><span class="nav-dot"></span>Alerts</button>
+      <button class="nav-tab" data-view="time"><span class="nav-dot"></span>Time Machine</button>
+      <button class="nav-tab" data-view="sim"><span class="nav-dot"></span>Simulator</button>
+      <button class="nav-tab" data-view="impact"><span class="nav-dot"></span>Impact</button>
+      <button class="nav-tab" data-view="data"><span class="nav-dot"></span>Data</button>
+    </nav>
+
+    <div class="top-status">
+      <div class="status-chip live">
+        <span class="status-dot"></span>LIVE
+      </div>
+      <div class="time-chip" id="clockChip">
+        <span class="time-label">ZULU</span>
+        <span class="time-value" id="clockValue">00:00:00</span>
+      </div>
+      <button class="btn-ghost data-source-btn" id="openDataDrawer" title="Data Sources & Methodology">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Sources
+      </button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- ============= OVERVIEW VIEW ============= -->
+    <section class="view active" id="view-overview">
+      <div class="overview-grid">
+        <div class="command-center col-span-12 glass">
+          <div class="cc-header">
+            <div>
+              <div class="cc-eyebrow">GLOBAL LANDSLIDE WATCH</div>
+              <h2 class="cc-title">Mission Control · <span id="cc-date">25 Aug 2026</span></h2>
+            </div>
+            <div class="cc-badges">
+              <span class="cc-badge nasa">NASA EO · Linked</span>
+              <span class="cc-badge dem">SRTM DEM · 30m</span>
+              <span class="cc-badge ai">Risk Engine v1.0</span>
+              <span class="cc-badge demo">DEMO MODE</span>
+            </div>
+          </div>
+          <div class="kpi-row" id="kpiRow"></div>
+        </div>
+
+        <div class="col-span-8 glass panel map-panel">
+          <div class="panel-header">
+            <h3>Landslide Intelligence Map</h3>
+            <div class="panel-actions">
+              <select id="overviewMapBasemap" class="mini-select">
+                <option value="sat">Satellite</option>
+                <option value="terrain" selected>Terrain + Risk</option>
+                <option value="dark">Dark Analysis</option>
+              </select>
+              <span class="mini-pulse" title="Risk pulse active"></span>
+            </div>
+          </div>
+          <div id="overviewMap" class="mini-map"></div>
+        </div>
+
+        <div class="col-span-4 glass panel">
+          <div class="panel-header">
+            <h3>Risk Index</h3>
+            <span class="pill pill-high" id="globalRiskLevel">HIGH</span>
+          </div>
+          <div class="risk-score-wrap">
+            <svg class="risk-ring" viewBox="0 0 220 220" width="220" height="220">
+              <defs>
+                <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#00E5FF"/>
+                  <stop offset="0.5" stop-color="#FFD54F"/>
+                  <stop offset="1" stop-color="#FF1744"/>
+                </linearGradient>
+              </defs>
+              <circle cx="110" cy="110" r="90" stroke="rgba(255,255,255,0.05)" stroke-width="12" fill="none"/>
+              <circle id="riskRing" cx="110" cy="110" r="90" stroke="url(#ringGrad)" stroke-width="12"
+                      fill="none" stroke-linecap="round"
+                      stroke-dasharray="565.48" stroke-dashoffset="282"
+                      transform="rotate(-90 110 110)"/>
+            </svg>
+            <div class="risk-score-center">
+              <div class="score-number" id="globalRiskScore">58</div>
+              <div class="score-label">Global Likelihood</div>
+            </div>
+          </div>
+          <div class="factor-bars" id="globalFactors"></div>
+        </div>
+
+        <div class="col-span-5 glass panel">
+          <div class="panel-header">
+            <h3>Top 10 Emerging Risk Zones</h3>
+            <button class="btn-link" id="refreshRanking">Refresh</button>
+          </div>
+          <div class="ranking-list" id="rankingList"></div>
+        </div>
+
+        <div class="col-span-4 glass panel">
+          <div class="panel-header">
+            <h3>24-Hour Risk Trend</h3>
+            <span class="pill pill-amber">Δ +12%</span>
+          </div>
+          <div class="chart-wrap"><canvas id="trendChart" height="220"></canvas></div>
+        </div>
+
+        <div class="col-span-3 glass panel">
+          <div class="panel-header">
+            <h3>Risk Distribution</h3>
+          </div>
+          <div id="distroBars" class="distro"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= LIVE MAP VIEW ============= -->
+    <section class="view" id="view-map">
+      <div class="map-layout">
+        <aside class="map-side glass">
+          <div class="side-title">
+            <span class="side-mark"></span>
+            Layer Controls
+          </div>
+
+          <div class="layer-group">
+            <div class="layer-group-title">Base Map</div>
+            <div class="radio-row">
+              <label><input type="radio" name="basemap" value="sat" /> Satellite</label>
+              <label><input type="radio" name="basemap" value="terrain" checked /> Terrain</label>
+              <label><input type="radio" name="basemap" value="dark" /> Dark</label>
+            </div>
+          </div>
+
+          <div class="layer-group">
+            <div class="layer-group-title">Overlays</div>
+            <label class="toggle"><input type="checkbox" id="layRisk" checked /><span class="slider"></span><span class="label-text">Risk Zones</span></label>
+            <label class="toggle"><input type="checkbox" id="layHeat" checked /><span class="slider"></span><span class="label-text">Probability Heatmap</span></label>
+            <label class="toggle"><input type="checkbox" id="layHistory" checked /><span class="slider"></span><span class="label-text">Historical Landslides</span></label>
+            <label class="toggle"><input type="checkbox" id="layRain" /><span class="slider"></span><span class="label-text">Rainfall</span></label>
+            <label class="toggle"><input type="checkbox" id="laySoil" /><span class="slider"></span><span class="label-text">Soil Moisture</span></label>
+            <label class="toggle"><input type="checkbox" id="laySlope" /><span class="slider"></span><span class="label-text">Slope</span></label>
+            <label class="toggle"><input type="checkbox" id="layRoads" /><span class="slider"></span><span class="label-text">Roads</span></label>
+            <label class="toggle"><input type="checkbox" id="layRivers" /><span class="slider"></span><span class="label-text">Rivers & Drainage</span></label>
+            <label class="toggle"><input type="checkbox" id="layPop" /><span class="slider"></span><span class="label-text">Settlements</span></label>
+            <label class="toggle"><input type="checkbox" id="layBoundaries" /><span class="slider"></span><span class="label-text">Administrative</span></label>
+          </div>
+
+          <div class="layer-group">
+            <div class="layer-group-title">Opacity · <span id="opacityLabel">80%</span></div>
+            <input type="range" id="opacitySlider" min="10" max="100" value="80" class="range" />
+          </div>
+
+          <div class="map-search">
+            <input type="text" id="mapSearch" placeholder="Search region, zone, coordinates…" />
+            <button id="goSearch">Go</button>
+          </div>
+
+          <div class="legend">
+            <div class="legend-title">Risk Legend</div>
+            <div class="legend-item"><span class="dot crit"></span>Critical (80–100)</div>
+            <div class="legend-item"><span class="dot high"></span>High (60–79)</div>
+            <div class="legend-item"><span class="dot mod"></span>Moderate (40–59)</div>
+            <div class="legend-item"><span class="dot low"></span>Low (0–39)</div>
+          </div>
+        </aside>
+
+        <div class="map-wrap">
+          <div id="mainMap" class="main-map"></div>
+          <div class="map-hud">
+            <div class="hud-chip" id="hudLat">LAT --</div>
+            <div class="hud-chip" id="hudLon">LON --</div>
+            <div class="hud-chip" id="hudZoom">ZOOM --</div>
+            <div class="hud-chip scan">SCAN</div>
+          </div>
+          <div class="map-overlay-panel glass" id="riskPanel">
+            <div class="rp-head">
+              <span class="rp-mark"></span>
+              <div>
+                <div class="rp-name" id="rpName">Select a risk zone</div>
+                <div class="rp-region" id="rpRegion">Click on any highlighted area on the map</div>
+              </div>
+              <button class="btn-icon" id="closeRiskPanel" title="Close">✕</button>
+            </div>
+            <div class="rp-score" id="rpScoreWrap" hidden>
+              <div class="rp-score-num" id="rpScoreNum">--</div>
+              <div class="rp-score-label">
+                <span class="pill" id="rpLevel">--</span>
+                <div class="rp-conf">Confidence <b id="rpConf">--</b></div>
+              </div>
+            </div>
+            <div id="rpFactors"></div>
+            <div class="rp-expl" id="rpExpl"></div>
+            <div class="rp-actions">
+              <button class="btn-primary" id="rpFocusAlerts">View Alerts →</button>
+              <button class="btn-ghost" id="rpFocusImpact">Impact Assessment →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= RISK INTEL VIEW ============= -->
+    <section class="view" id="view-risk">
+      <div class="panel-grid">
+        <div class="glass panel col-span-5">
+          <div class="panel-header">
+            <h3>AI Risk Engine · Score Decomposition</h3>
+            <select id="riskZoneSelect" class="mini-select"></select>
+          </div>
+          <div class="engine-wrap">
+            <div class="engine-score">
+              <svg viewBox="0 0 260 260" width="260" height="260">
+                <defs>
+                  <linearGradient id="ringGrad2" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#00E5FF"/>
+                    <stop offset="0.5" stop-color="#FFD54F"/>
+                    <stop offset="1" stop-color="#FF1744"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="130" cy="130" r="110" stroke="rgba(255,255,255,0.05)" stroke-width="16" fill="none"/>
+                <circle id="engineRing" cx="130" cy="130" r="110" stroke="url(#ringGrad2)" stroke-width="16"
+                        fill="none" stroke-linecap="round" stroke-dasharray="691.15" stroke-dashoffset="414.69"
+                        transform="rotate(-90 130 130)"/>
+                <circle cx="130" cy="130" r="82" stroke="rgba(0,229,255,0.2)" stroke-width="1" fill="none"/>
+                <circle cx="130" cy="130" r="60" stroke="rgba(0,229,255,0.1)" stroke-width="1" fill="none"/>
+              </svg>
+              <div class="engine-score-center">
+                <div class="score-number xl" id="engineScoreNum">87</div>
+                <div class="score-label">Risk Score</div>
+                <span class="pill pill-high" id="engineLevel">HIGH</span>
+              </div>
+            </div>
+            <div class="engine-expl" id="engineExpl">
+              High slope combined with abnormal precipitation and elevated soil moisture is increasing landslide susceptibility in this region.
+            </div>
+          </div>
+        </div>
+
+        <div class="glass panel col-span-4">
+          <div class="panel-header"><h3>Weighted Risk Factor Breakdown</h3></div>
+          <div class="factor-rings" id="factorRings"></div>
+        </div>
+
+        <div class="glass panel col-span-3">
+          <div class="panel-header"><h3>Why This Alert?</h3></div>
+          <ol class="why-list" id="whyList"></ol>
+        </div>
+
+        <div class="glass panel col-span-7">
+          <div class="panel-header">
+            <h3>Factor Contributions · Radar Signature</h3>
+          </div>
+          <div class="chart-wrap"><canvas id="radarChart" height="320"></canvas></div>
+        </div>
+
+        <div class="glass panel col-span-5">
+          <div class="panel-header"><h3>7-Day Factor Trend</h3></div>
+          <div class="chart-wrap"><canvas id="factorChart" height="320"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= ALERTS VIEW ============= -->
+    <section class="view" id="view-alerts">
+      <div class="alerts-layout">
+        <div class="alerts-main col-span-8 glass panel">
+          <div class="panel-header">
+            <h3>Early Warning Center · Active Alerts</h3>
+            <div class="alert-filter">
+              <button class="btn-chip active" data-filter="all">All</button>
+              <button class="btn-chip" data-filter="CRITICAL">Critical</button>
+              <button class="btn-chip" data-filter="HIGH">High</button>
+              <button class="btn-chip" data-filter="MODERATE">Moderate</button>
+            </div>
+          </div>
+          <div class="alert-list" id="alertList"></div>
+        </div>
+
+        <div class="col-span-4">
+          <div class="glass panel">
+            <div class="panel-header"><h3>24-Hour Anomaly Stream</h3></div>
+            <div id="anomalyStream" class="anomaly-stream"></div>
+          </div>
+          <div class="glass panel mt">
+            <div class="panel-header">
+              <h3>Environmental Signals</h3>
+            </div>
+            <div class="env-signals" id="envSignals"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= TIME MACHINE VIEW ============= -->
+    <section class="view" id="view-time">
+      <div class="time-layout">
+        <div class="col-span-8 glass panel">
+          <div class="panel-header">
+            <h3>Earth Time Machine · Historical Evolution</h3>
+            <div class="tm-modes">
+              <button class="btn-chip active" data-tm-mode="risk">Risk Evolution</button>
+              <button class="btn-chip" data-tm-mode="rain">Rainfall</button>
+              <button class="btn-chip" data-tm-mode="vegetation">Vegetation</button>
+              <button class="btn-chip" data-tm-mode="soil">Soil Moisture</button>
+            </div>
+          </div>
+          <div id="timeMap" class="time-map"></div>
+          <div class="timeline-wrap">
+            <div class="timeline-track">
+              <div class="timeline-fill" id="timelineFill"></div>
+              <input type="range" min="0" max="119" value="119" class="timeline-range" id="timelineRange"/>
+              <div class="timeline-marks" id="timelineMarks"></div>
+            </div>
+            <div class="timeline-controls">
+              <button class="btn-icon" id="tmBack" title="Step back">⏮</button>
+              <button class="btn-primary" id="tmPlay" title="Play/Pause">▶ Play</button>
+              <button class="btn-icon" id="tmFwd" title="Step forward">⏭</button>
+              <div class="timeline-date" id="timelineDate">Aug 25, 2026 · 06:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-4">
+          <div class="glass panel">
+            <div class="panel-header"><h3>Change Detection · Before / After</h3></div>
+            <div class="compare-wrap">
+              <div class="compare-block">
+                <div class="compare-label">BEFORE · <span id="beforeDate">01 Jul 2026</span></div>
+                <div class="compare-img before" id="beforeImg">
+                  <div class="compare-scan"></div>
+                </div>
+              </div>
+              <div class="compare-arrow">→</div>
+              <div class="compare-block">
+                <div class="compare-label">AFTER · <span id="afterDate">25 Aug 2026</span></div>
+                <div class="compare-img after" id="afterImg">
+                  <div class="compare-scan"></div>
+                  <div class="change-hl hl1"></div>
+                  <div class="change-hl hl2"></div>
+                </div>
+              </div>
+            </div>
+            <ul class="change-summary" id="changeSummary"></ul>
+          </div>
+
+          <div class="glass panel mt">
+            <div class="panel-header"><h3>Historical Events Timeline</h3></div>
+            <div class="mini-timeline" id="miniTimeline"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= SIMULATOR VIEW ============= -->
+    <section class="view" id="view-sim">
+      <div class="panel-grid">
+        <div class="glass panel col-span-5">
+          <div class="panel-header">
+            <h3>Landslide Scenario Simulator</h3>
+            <span class="pill pill-amber">WHAT-IF</span>
+          </div>
+          <div class="sim-form" id="simForm">
+            <div class="sim-field">
+              <div class="sim-label">Rainfall Intensity <span id="simRainVal">100%</span><small>current baseline</small></div>
+              <input type="range" id="simRain" min="0" max="300" value="100" class="range"/>
+            </div>
+            <div class="sim-field">
+              <div class="sim-label">Rainfall Duration <span id="simDurVal">24h</span></div>
+              <input type="range" id="simDur" min="1" max="120" value="24" class="range"/>
+            </div>
+            <div class="sim-field">
+              <div class="sim-label">Soil Saturation <span id="simSoilVal">60%</span></div>
+              <input type="range" id="simSoil" min="0" max="100" value="60" class="range"/>
+            </div>
+            <div class="sim-field">
+              <div class="sim-label">Slope Threshold <span id="simSlopeVal">30°</span></div>
+              <input type="range" id="simSlope" min="0" max="80" value="30" class="range"/>
+            </div>
+            <div class="sim-field">
+              <div class="sim-label">Vegetation Coverage <span id="simVegVal">65%</span></div>
+              <input type="range" id="simVeg" min="0" max="100" value="65" class="range"/>
+            </div>
+            <div class="sim-actions">
+              <button class="btn-primary" id="simRun">Run Simulation</button>
+              <button class="btn-ghost" id="simReset">Reset Baseline</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass panel col-span-7">
+          <div class="panel-header">
+            <h3>Projected Risk Map · Simulation Output</h3>
+            <span class="sim-summary" id="simSummary">Adjust parameters and run simulation</span>
+          </div>
+          <div id="simMap" class="sim-map"></div>
+        </div>
+
+        <div class="glass panel col-span-6">
+          <div class="panel-header"><h3>Simulation Result · KPI Impact</h3></div>
+          <div class="sim-kpis" id="simKpis"></div>
+        </div>
+
+        <div class="glass panel col-span-6">
+          <div class="panel-header"><h3>Risk Sensitivity · Response Curve</h3></div>
+          <div class="chart-wrap"><canvas id="simChart" height="260"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= IMPACT VIEW ============= -->
+    <section class="view" id="view-impact">
+      <div class="panel-grid">
+        <div class="glass panel col-span-6">
+          <div class="panel-header">
+            <h3>Impact Assessment · Selected Risk Zone</h3>
+            <select id="impactZoneSelect" class="mini-select"></select>
+          </div>
+          <div class="impact-kpis" id="impactKpis"></div>
+        </div>
+
+        <div class="glass panel col-span-6">
+          <div class="panel-header"><h3>Exposure Breakdown</h3></div>
+          <div class="chart-wrap"><canvas id="impactChart" height="260"></canvas></div>
+        </div>
+
+        <div class="glass panel col-span-4">
+          <div class="panel-header"><h3>Settlements Exposed</h3></div>
+          <div class="exp-list" id="expSettlements"></div>
+        </div>
+        <div class="glass panel col-span-4">
+          <div class="panel-header"><h3>Critical Infrastructure</h3></div>
+          <div class="exp-list" id="expInfra"></div>
+        </div>
+        <div class="glass panel col-span-4">
+          <div class="panel-header"><h3>Roads at Risk</h3></div>
+          <div class="exp-list" id="expRoads"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= DATA / METHODOLOGY VIEW ============= -->
+    <section class="view" id="view-data">
+      <div class="panel-grid">
+        <div class="glass panel col-span-7">
+          <div class="panel-header"><h3>Data Sources & Integration Status</h3></div>
+          <table class="data-table" id="dataSourcesTable"></table>
+        </div>
+        <div class="glass panel col-span-5">
+          <div class="panel-header"><h3>Risk Score Methodology</h3></div>
+          <div class="method-text" id="methodText"></div>
+        </div>
+        <div class="glass panel col-span-12">
+          <div class="panel-header"><h3>Integrity Disclaimer</h3></div>
+          <div class="disclaimer">
+            <p><b>TerraShield AI [DEMO BUILD]</b> · This is a hackathon prototype. Data displayed combines public-domain reference patterns with simulated model outputs for demonstration.</p>
+            <p>Risk scores are <b>model predictions</b>, not official warnings. Never use this tool for life-or-death decisions. In an emergency, follow official government and disaster-management advisories.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating TerraShield Copilot -->
+  <div class="copilot glass" id="copilot">
+    <button class="copilot-toggle" id="copilotToggle" title="TerraShield AI Copilot">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2a5 5 0 0 0-5 5v2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5z"/>
+        <path d="M9 14h.01M15 14h.01"/>
+      </svg>
+      <span class="copilot-pulse"></span>
+    </button>
+    <div class="copilot-panel" id="copilotPanel" hidden>
+      <div class="copilot-header">
+        <div>
+          <div class="copilot-name">TerraShield Copilot</div>
+          <div class="copilot-sub">Ask about risk, regions, or infrastructure</div>
+        </div>
+        <button class="btn-icon" id="copilotClose">✕</button>
+      </div>
+      <div class="copilot-msgs" id="copilotMsgs"></div>
+      <div class="copilot-quick">
+        <button class="btn-chip" data-copilot="highest">Which regions have highest risk today?</button>
+        <button class="btn-chip" data-copilot="why">Why is the top zone critical?</button>
+        <button class="btn-chip" data-copilot="infra">Infrastructure closest to risk?</button>
+        <button class="btn-chip" data-copilot="compare">Compare vs. historical events</button>
+      </div>
+      <form class="copilot-input" id="copilotForm">
+        <input type="text" id="copilotText" placeholder="Ask anything about the risk map…" />
+        <button type="submit" class="btn-primary sm">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Risk Pulse overlay (CSS animated) -->
+  <div id="riskPulse" class="risk-pulse-overlay" hidden></div>
+
+  <!-- Data sources drawer -->
+  <!-- <div class="drawer" id="dataDrawer" hidden>
+    <div class="drawer-inner glass">
+      <div class="panel-header">
+        <h3>Data Sources & Methodology</h3>
+        <button class="btn-icon" id="closeDrawer">✕</button>
+      </div>
+      <div class="drawer-body" id="drawerBody"></div>
+    </div>
+  </div> -->
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/risk.js"></script>
+  <script src="js/alerts.js"></script>
+  <script src="js/report.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

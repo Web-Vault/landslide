@@ -1,0 +1,300 @@
+{
+  "metadata": {
+    "source": "TerraShield AI Risk Engine v1.0 [SIMULATED DEMO DATA]",
+    "generated": "2026-08-25T06:00:00Z",
+    "disclaimer": "Risk scores are model predictions for demonstration purposes. Not an official warning."
+  },
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "ZONE-001",
+      "properties": {
+        "name": "Western Ghats - Munnar Sector",
+        "region": "Kerala, India",
+        "riskLevel": "CRITICAL",
+        "riskScore": 92,
+        "confidence": 94,
+        "factors": {
+          "slope": 95,
+          "rainfallAnomaly": 91,
+          "soilMoisture": 88,
+          "vegetationChange": 67,
+          "historicalSusceptibility": 93,
+          "terrainInstability": 90
+        },
+        "explanation": "Extremely steep terrain combined with record monsoon precipitation and near-saturation soil moisture creates imminent landslide conditions.",
+        "lastUpdated": "2026-08-25T05:47:00Z",
+        "populationExposed": 142000,
+        "areaSqKm": 842,
+        "primaryTrigger": "Extreme rainfall + steep terrain"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[76.9,10.1],[77.2,10.1],[77.2,9.8],[76.9,9.8],[76.9,10.1]]]
+      },
+      "center": [10.0, 77.05]
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-002",
+      "properties": {
+        "name": "Darjeeling Himalayan Foothills",
+        "region": "West Bengal, India",
+        "riskLevel": "HIGH",
+        "riskScore": 87,
+        "confidence": 91,
+        "factors": {
+          "slope": 91,
+          "rainfallAnomaly": 84,
+          "soilMoisture": 76,
+          "vegetationChange": 63,
+          "historicalSusceptibility": 88,
+          "terrainInstability": 82
+        },
+        "explanation": "High slope combined with abnormal precipitation and elevated soil moisture is increasing landslide susceptibility in this region.",
+        "lastUpdated": "2026-08-25T05:42:00Z",
+        "populationExposed": 89500,
+        "areaSqKm": 615,
+        "primaryTrigger": "Steep terrain + saturated soil"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[88.1,27.1],[88.4,27.1],[88.4,26.8],[88.1,26.8],[88.1,27.1]]]
+      },
+      "center": [26.95, 88.25]
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-003",
+      "properties": {
+        "name": "Uttarakhand - Garhwal Range",
+        "region": "Uttarakhand, India",
+        "riskLevel": "HIGH",
+        "riskScore": 83,
+        "confidence": 88,
+        "factors": {
+          "slope": 89,
+          "rainfallAnomaly": 78,
+          "soilMoisture": 72,
+          "vegetationChange": 58,
+          "historicalSusceptibility": 92,
+          "terrainInstability": 86
+        },
+        "explanation": "Historically landslide-prone region facing above-average monsoon rains and recent glacial melt runoff affecting soil stability.",
+        "lastUpdated": "2026-08-25T05:38:00Z",
+        "populationExposed": 215000,
+        "areaSqKm": 1280,
+        "primaryTrigger": "Glacial melt + monsoon rainfall"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[78.6,30.6],[79.0,30.6],[79.0,30.2],[78.6,30.2],[78.6,30.6]]]
+      },
+      "center": [30.4, 78.8]
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-004",
+      "properties": {
+        "name": "Konkan Coast - Ratnagiri",
+        "region": "Maharashtra, India",
+        "riskLevel": "HIGH",
+        "riskScore": 79,
+        "confidence": 85,
+        "factors": {
+          "slope": 74,
+          "rainfallAnomaly": 88,
+          "soilMoisture": 82,
+          "vegetationChange": 54,
+          "historicalSusceptibility": 76,
+          "terrainInstability": 72
+        },
+        "explanation": "Coastal escarpments under extreme rainfall events; laterite soils showing saturation-related weakness.",
+        "lastUpdated": "2026-08-25T05:33:00Z",
+        "populationExposed": 67300,
+        "areaSqKm": 498,
+        "primaryTrigger": "Coastal rainfall + escarpment"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[73.1,17.2],[73.5,17.2],[73.5,16.8],[73.1,16.8],[73.1,17.2]]]
+      },
+      "center": [17.0, 73.3]
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-005",
+      "properties": {
+        "name": "Assam - Karbi Anglong Hills",
+        "region": "Assam, India",
+        "riskLevel": "MODERATE",
+        "riskScore": 68,
+        "confidence": 82,
+        "factors": {
+          "slope": 62,
+          "rainfallAnomaly": 74,
+          "soilMoisture": 71,
+          "vegetationChange": 68,
+          "historicalSusceptibility": 65,
+          "terrainInstability": 64
+        },
+        "explanation": "Moderate slopes under persistent rainfall; vegetation loss from recent jhum cultivation reducing soil binding.",
+        "lastUpdated": "2026-08-25T05:28:00Z",
+        "populationExposed": 42800,
+        "areaSqKm": 724,
+        "primaryTrigger": "Persistent rain + vegetation loss"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[93.2,26.1],[93.6,26.1],[93.6,25.7],[93.2,25.7],[93.2,26.1]]]
+      },
+      "center": [25.9, 93.4]
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-006",
+      "properties": {
+        "name": "Eastern Ghats - Araku Valley",
+        "region": "Andhra Pradesh, India",
+        "riskLevel": "MODERATE",
+        "riskScore": 61,
+        "confidence": 78,
+        "factors": {
+          "slope": 68,
+          "rainfallAnomaly": 58,
+          "soilMoisture": 64,
+          "vegetationChange": 52,
+          "historicalSusceptibility": 59,
+          "terrainInstability": 61
+        },
+        "explanation": "Eastern ghat slopes with seasonal monsoon intensification; moderate risk expected to rise with forecasted rains.",
+        "lastUpdated": "2026-08-25T05:21:00Z",
+        "populationExposed": 28400,
+        "areaSqKm": 540,
+        "primaryTrigger": "Seasonal monsoon intensification"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[82.8,18.4],[83.1,18.4],[83.1,18.0],[82.8,18.0],[82.8,18.4]]]
+      },
+      "center": [18.2, 82.95]
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-007",
+      "properties": {
+        "name": "Himachal Pradesh - Kullu Valley",
+        "region": "Himachal Pradesh, India",
+        "riskLevel": "HIGH",
+        "riskScore": 81,
+        "confidence": 86,
+        "factors": {
+          "slope": 88,
+          "rainfallAnomaly": 76,
+          "soilMoisture": 70,
+          "vegetationChange": 61,
+          "historicalSusceptibility": 89,
+          "terrainInstability": 85
+        },
+        "explanation": "Himalayan valley with recent cloudburst events; river-bank erosion and steep road cuts increasing failure risk.",
+        "lastUpdated": "2026-08-25T05:15:00Z",
+        "populationExposed": 56200,
+        "areaSqKm": 890,
+        "primaryTrigger": "Cloudburst + road cut instability"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[76.9,32.1],[77.3,32.1],[77.3,31.7],[76.9,31.7],[76.9,32.1]]]
+      },
+      "center": [31.9, 77.1]
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-008",
+      "properties": {
+        "name": "Meghalaya - Cherrapunji Plateau",
+        "region": "Meghalaya, India",
+        "riskLevel": "MODERATE",
+        "riskScore": 72,
+        "confidence": 84,
+        "factors": {
+          "slope": 70,
+          "rainfallAnomaly": 82,
+          "soilMoisture": 78,
+          "vegetationChange": 55,
+          "historicalSusceptibility": 71,
+          "terrainInstability": 68
+        },
+        "explanation": "World's wettest region experiencing above-average rains; deeply weathered limestone terrain showing early failure signs.",
+        "lastUpdated": "2026-08-25T05:10:00Z",
+        "populationExposed": 34100,
+        "areaSqKm": 410,
+        "primaryTrigger": "Extreme rainfall + limestone geology"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[91.6,25.4],[91.9,25.4],[91.9,25.0],[91.6,25.0],[91.6,25.4]]]
+      },
+      "center": [25.2, 91.75]
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-009",
+      "properties": {
+        "name": "Sikkim - Teesta Basin",
+        "region": "Sikkim, India",
+        "riskLevel": "CRITICAL",
+        "riskScore": 89,
+        "confidence": 90,
+        "factors": {
+          "slope": 93,
+          "rainfallAnomaly": 85,
+          "soilMoisture": 80,
+          "vegetationChange": 60,
+          "historicalSusceptibility": 90,
+          "terrainInstability": 91
+        },
+        "explanation": "Very high relief zone with recent seismic aftershocks weakening slope stability; combined with heavy monsoon runoff creating critical conditions.",
+        "lastUpdated": "2026-08-25T05:04:00Z",
+        "populationExposed": 47800,
+        "areaSqKm": 560,
+        "primaryTrigger": "Seismic aftershocks + heavy runoff"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[88.5,27.4],[88.8,27.4],[88.8,27.0],[88.5,27.0],[88.5,27.4]]]
+      },
+      "center": [27.2, 88.65]
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-010",
+      "properties": {
+        "name": "Tamil Nadu - Nilgiri Hills",
+        "region": "Tamil Nadu, India",
+        "riskLevel": "LOW",
+        "riskScore": 42,
+        "confidence": 76,
+        "factors": {
+          "slope": 64,
+          "rainfallAnomaly": 28,
+          "soilMoisture": 41,
+          "vegetationChange": 46,
+          "historicalSusceptibility": 55,
+          "terrainInstability": 44
+        },
+        "explanation": "Below-average rainfall for the season; well-vegetated slopes currently stable. Continue routine monitoring.",
+        "lastUpdated": "2026-08-25T04:58:00Z",
+        "populationExposed": 18900,
+        "areaSqKm": 360,
+        "primaryTrigger": "Routine seasonal monitoring"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[76.6,11.6],[76.9,11.6],[76.9,11.2],[76.6,11.2],[76.6,11.6]]]
+      },
+      "center": [11.4, 76.75]
+    }
+  ]
+}

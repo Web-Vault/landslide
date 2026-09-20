@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00E5FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0091EA;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00E676;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00C853;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <circle cx="60" cy="60" r="56" stroke="url(#cyanGrad)" stroke-width="2" fill="rgba(0,20,45,0.4)"/>
+  <circle cx="60" cy="60" r="48" stroke="url(#cyanGrad)" stroke-width="0.8" fill="none" opacity="0.4"/>
+  <circle cx="60" cy="60" r="40" stroke="url(#cyanGrad)" stroke-width="0.5" fill="none" opacity="0.25"/>
+  <path d="M30 82 L48 52 L58 66 L72 40 L90 82 Z" fill="url(#greenGrad)" opacity="0.85" filter="url(#glow)"/>
+  <path d="M30 82 L48 52 L58 66 L72 40 L90 82 Z" stroke="#B9F6CA" stroke-width="0.8" fill="none" opacity="0.6"/>
+  <circle cx="48" cy="52" r="2.5" fill="#FFD54F" filter="url(#glow)">
+    <animate attributeName="r" values="2.5;4;2.5" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <path d="M60 22 L60 30 M60 90 L60 98 M22 60 L30 60 M90 60 L98 60" stroke="url(#cyanGrad)" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="60" cy="60" r="3" fill="#00E5FF" filter="url(#glow)"/>
+  <path d="M36 28 Q60 16 84 28" stroke="url(#cyanGrad)" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M36 92 Q60 104 84 92" stroke="url(#cyanGrad)" stroke-width="1" fill="none" opacity="0.5"/>
+</svg>
